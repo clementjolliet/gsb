@@ -22,9 +22,18 @@
                 <?php
                 foreach ($lesFraisForfait as $unFraisForfait) {
                     $quantite = $unFraisForfait['quantite'];
-                    ?>
-                    <td class="qteForfait"><?php echo $quantite ?> </td>
-                    <?php
+                    if ($_SESSION['fonction'] == "visiteur") {
+                        ?>
+                        <td class="qteForfait"><?php echo $quantite ?> </td>
+                        <?php
+                    }
+                    else{
+                        ?>
+                        <td class="qteForfait">
+                            <input value="<?php echo $quantite ?>">
+                        </td>
+                        <?php
+                    }
                 }
                 ?>
             </tr>

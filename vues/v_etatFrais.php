@@ -26,8 +26,7 @@
                         ?>
                         <td class="qteForfait"><?php echo $quantite ?> </td>
                         <?php
-                    }
-                    else{
+                    } else {
                         ?>
                         <td class="qteForfait">
                             <input value="<?php echo $quantite ?>">
@@ -79,7 +78,7 @@
                             <input value="<?php echo $montant ?>">
                         </td>
                         <td>
-                            <input type="checkbox">
+                            <input type="checkbox" checked="true">
                         </td>
                     </tr>
                     <?php
@@ -88,6 +87,11 @@
             ?>
         </table>
     </div>
+    <form action="index.php?uc=comptable&action=validerFraisComptable" method="post">
+        <div class="col-lg-offset-9 col-md-offset-9 col-xs-offset-9 col-lg-3 col-md-3 col-xs-3">
+            <input id="ok" type="submit" class="btn btn-success" value="Valider" />
+        </div>
+    </form>
 </div>
 </div>
 </div>

@@ -34,6 +34,7 @@ function connecter($id, $nom, $prenom, $fonction) {
  */
 function deconnecter() {
     session_destroy();
+    unset($_SESSION);
 }
 
 /**

@@ -1,0 +1,275 @@
+/* Styles des divisions principales de la page */
+body{
+    background-color: lightgray;
+    background-image: url(imgs/FONDGLOBAL.jpg);
+    background-repeat: repeat-x;
+    margin:0% 0%;
+    padding : 0.6em;
+    font-family:"Trebuchet MS",Verdana,Geneva,Arial,Helvetica,sans-serif;
+    //font-size:0.8em;
+}
+#page {
+    background-color:white;
+    width : 65%;
+    margin : auto ;
+    border : 0.2em solid black;
+    padding : 0.1em;
+}
+/*#entete{
+    background-color:rgb(72,198,236);
+    color : #980101;
+    border: solid 0.1em #980101;
+    height: 154px;
+    padding: 0em;
+    border-collapse: separate;
+}*/
+.col-lg-3,.col-md-3,.col-xs-3{
+    padding-left:0px;
+}
+#entete .well{
+    padding: 0px;
+    margin-bottom:0px;
+}
+.container-fluid .well{
+    height:50px;
+}
+#pied{
+    clear : both;
+    border : solid 0.2em #980101;
+    margin-left : 18%;
+    margin-top : 1em;
+    padding:0.4em;
+    padding: 0.2em;
+    border-collapse: separate;
+}
+#menuGauche {
+    margin-top : 0.8em;
+    padding: 1em;
+    background-color: white;
+    color: rgb(0,85,227);
+}
+
+
+/* pour r�tablir le mauvais effet sur les nav. modernes */
+html>body #contenu{
+    height:auto;
+}
+
+
+
+#logoGSB {
+    float : left;
+    width : 238px;
+    height : 152px;
+}
+
+h1 {
+    margin : 1em;
+    //margin-left:6em;
+    //font-size : x-large;
+    text-align:center;
+}
+
+.container-fluid pre {
+    width:95%;
+    overflow : scroll;
+}
+.container-fluid h2 {
+    font-size : large;
+    text-align:left;
+    margin:0;
+    margin-bottom:0.5em;
+}
+
+.logoValidW3c {
+    display: inline;
+}
+#libValidW3c{
+    display : inline;
+    vertical-align:middle;
+}
+
+
+.piedForm {
+    border-bottom-width : 0.1em;
+    border-left-width : 0.1em;
+    border-right-width : 0.1em;
+    border-top-width : 0em;
+    border-style : solid;
+    border-color : #000;
+    text-align:right ;
+    width : 95%;
+    margin-top:0em;
+}
+form {
+    margin-bottom:1em;  
+}
+
+input, button, textarea, select{
+    font-family:"Trebuchet MS", sans-serif;
+    font-size : 1em;
+}
+button{
+    width : 60px;
+    height : 30px;
+    text-align:center;
+    vertical-align:middle;
+}
+input:hover, textarea:hover, select:hover{
+    background-color : #FAFAE6;
+    cursor : pointer;
+}
+
+/*  Le texte des messages d'erreur est de couleur rose sur fond ocre et de 
+taille de caract�res l�g�rement sup�rieure � la normale */
+.erreur{ 
+    background-color:rgb(237,210,229);
+    color:rgb(203,28,128);
+    font-size:1.1em;
+    width:95%;
+}
+.centre {
+    text-align:center;
+}
+
+.info {
+    background-color:rgb(178,207,81);
+    color : white;
+    font-size:1.1em;
+    width : 95%  
+}
+
+.encadre {
+    border : solid 0.1em #000;
+    width : 95%;
+}
+/* Style pour les liens de la page principale */
+.container-fluid .corpsTexte {
+    width:80%;
+    font-size:1.2em;
+}
+
+/* Style pour les liens de la page principale */
+.container-fluid a {
+    font-size : 1.1em;
+    color:gray;
+    text-decoration:none;
+}
+.container-fluid a:hover {
+    text-decoration:underline;
+    background-color : #D9BB7A;
+    font-size : 1em;
+}
+
+/* Style pour les parties importantes de la page principale */
+.container-fluid strong {
+    font-weight:bold;
+}
+
+
+@-moz-document url-prefix() {
+  fieldset { display: table-cell; }
+}
+.table th{
+    background-color: lightgray;
+}
+
+.container-fluid h3 {
+    font-size : 1.2em;
+}
+
+.container-fluid h2 {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    //color: #1D2941;
+    text-decoration: none;
+    //border : 1px solid #6988BE;
+    padding-left: 25px;
+    //background-color: #E9F1FE;
+    //height : 28px;
+}
+
+.container-fluid img {
+    height : 28px;
+    float : left;
+}
+.jumbotron{
+    background-color:#E9F1FE;
+    padding-top: 10px;
+    padding-bottom:10px;
+}
+.container{
+    width:100%;
+    padding-left: 0px;
+    padding-right:0px;
+}
+.container-fluid{
+    
+    margin-top : 1.2em;
+    margin-left: 18%;
+}
+/*#formFraitForfait{
+    border-style:inset;
+    border-width:3px;
+    border-bottom-color:#77AADD; 
+    border-left-color:#77AADD;
+    border-top-color: #149bdf;
+    border-right-color: #149bdf;
+}*/
+@media screen and (max-width:1600px){
+    #logoGSB{
+        display:none;
+    }
+    h1{
+        text-align:center;
+        margin-left:5px;
+        margin-right:5px;
+
+    }
+    #contenu h2{
+        font-size:12px;
+        padding-left:10px;
+    }
+}
+
+@media screen and (max-width:760px){
+    h1{
+        font-size:25px;
+    }
+    body{
+        font-size:11px;
+    }
+    #contenu{
+        border-left-width:0em;
+        border-left-style:none;
+        border-left-color:#FFF;
+        margin-left:0%;
+    }
+}
+@media screen and (max-width:700px){
+    #menuGauche{
+        padding:0.2em;
+        margin:0em;
+    }
+    #menuGauche li a, .col-xs-3 li a{
+        font-size:11px;
+        padding-right: 1px;
+    }
+    .nav>li>a{
+       padding:4px 2px;
+       
+    }
+    h1{
+        font-size:30px;
+    }
+}
+@media screen and (max-width:1050px){
+    #page {
+    background-color:white;
+    width : 100%;
+    margin : auto ;
+    border : 0.2em solid black;
+    padding : 0.1em;
+}
+}

@@ -395,5 +395,29 @@ class PdoGsb {
         $res->execute();
     }
     
+    /**
+     * Fonction récupérant tous les mois présents dans la base de donnée
+     */
+    public function getTousLesMois(){
+        $req = "select fichefrais.mois as mois from  fichefrais  
+		order by fichefrais.mois desc ";
+        $res = PdoGsb::$monPdo->prepare($req);
+        $res->execute();
+        $lesMois = array();
+        $laLigne = $res->fetch();
+        while ($laLigne != null) {
+            $mois = $laLigne['mois'];
+            $numAnnee = substr($mois, 0, 4);
+            $numMois = substr($mois, 4, 2);
+            $lesMois["$mois"] = array(
+                "mois" => "$mois",
+                "numAnnee" => "$numAnnee",
+                "numMois" => "$numMois"
+            );
+            $laLigne = $res->fetch();
+        }
+        return $lesMois;
+    }
+    
 }
 ?>

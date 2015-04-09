@@ -8,12 +8,25 @@ $numMois = substr($mois, 4, 2);
 $action = $_REQUEST['action'];
 $lesVisiteurs = $pdo->getLesVisiteurs();
 $lesMois = $pdo->getTousLesMois();
-include("vues/v_selectionVisiteur.php");
+//include("vues/v_selectionVisiteur.php");
 switch ($action) {
-    case 'validerFraisComptable': {
+    case 'selectionnerMois': {
+            $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
+            // Afin de sélectionner par défaut le dernier mois dans la zone de liste
+            // on demande toutes les clés, et on prend la première,
+            // les mois étant triés décroissants
+            $lesCles = array_keys($lesMois);
+            $moisASelectionner = $lesCles[0];
+            include("vues/v_selectionVisiteur.php");
+            break;
+        }
+    case 'pageFraisComptable': {
             $leMois = $_REQUEST['lstMois'];
+            $leVisiteur = $_REQUEST['lstVisiteurs'];
             $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
             $moisASelectionner = $leMois;
+            $visiteurASelectionner = $leVisiteur;
+            include("vues/v_selectionVisiteur.php");
             $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $leMois);
             $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $leMois);
             $lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($idVisiteur, $leMois);
@@ -25,6 +38,9 @@ switch ($action) {
             $dateModif = $lesInfosFicheFrais['dateModif'];
             $dateModif = dateAnglaisVersFrancais($dateModif);
             include("vues/v_etatFrais.php");
+        }
+    case 'validerFraisComptable': {
+            
         }
 }
 ?>

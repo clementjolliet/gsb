@@ -380,6 +380,20 @@ class PdoGsb {
             return -1;
         }
     }
-
+    
+    /**
+     * Fonction initialisant des frais forfait à zéro pour un visiteur n'en ayant pas
+     * pour le mois spécifié en paramètre de la fonction
+     * @param type $idVisiteur
+     * @param type $mois
+     */
+    public function genFraisForfait($idVisiteur, $mois){
+        $sql = "insert into lignefraisforfait values (:idVisiteur, :mois, 'ETP', 0), (:idVisiteur, :mois, 'KM', 0), (:idVisiteur, :mois, 'NUI', 0), (:idVisiteur, :mois, 'REP', 0)";
+        $res = PdoGsb::$monPdo->prepare($sql);
+        $res->bindParam(':idVisiteur',$idVisiteur);
+        $res->bindParam(':mois',$mois);
+        $res->execute();
+    }
+    
 }
 ?>

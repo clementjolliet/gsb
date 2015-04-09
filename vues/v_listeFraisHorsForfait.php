@@ -1,4 +1,4 @@
-<div class="col-lg-12">
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="table-responsive">
         <table class="table table-hover table-bordered">
             <caption>Descriptif des éléments hors forfait
@@ -31,40 +31,40 @@
         </table>
     </div>
 </div>
-<div class="col-lg-12">
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <form class="form-horizontal" action="index.php?uc=gererFrais&action=validerCreationFrais" method="post">
         <!--    <div class="corpsForm">-->
-
         <fieldset>
             <legend>Nouvel élément hors forfait</legend> 
             <div class="form-group">
-                <label for="txtDateHF" class="col-lg-2 control-label">Date (jj/mm/aaaa) : </label>
-                <div class="col-lg-5">
+                <label for="txtDateHF" class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label">Date (jj/mm/aaaa) : </label>
+                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-8">
                     <input type="text" id="txtDateHF" class="form-control" name="dateFrais" size="10" maxlength="10" value=""  />
                 </div>
             </div>
             <div class="form-group">
-                <label for="txtLibelleHF" class="col-lg-2 control-label">Libellé : </label>
-                <div class="col-lg-9">
+                <label for="txtLibelleHF" class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label">Libellé : </label>
+                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-8">
                     <input type="text" id="txtLibelleHF" class="form-control" name="libelle" size="70" maxlength="256" value="" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="txtMontantHF" class="col-lg-2 control-label">Montant : </label>
-                <div class="col-lg-5">
+                <label for="txtMontantHF" class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label">Montant : </label>
+                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-8">
                     <input type="text" id="txtMontantHF" class="form-control" name="montant" size="10" maxlength="10" value="" />
                 </div>
             </div>
         </fieldset>
         <!--    </div>-->
         <!--    <div class="piedForm">-->
-        <div class="col-lg-offset-9 col-md-offset-9 col-xs-offset-9 col-lg-3 col-md-3 col-xs-3">
-            <input type="submit" class="btn btn-success" value="Ajouter" size="20" />
-            <input type="reset" value="Effacer" class="btn btn-danger" size="20" />
-        </div> 
+
+        <div id="grpButtonFraishorsforfait">           
+            <input type="submit" class="btn btn-success" value="Ajouter" size="20" />         
+        </div>
         <!--    </div>-->
     </form>
 </div>
 </div>
+
 
 

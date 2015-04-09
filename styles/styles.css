@@ -209,6 +209,10 @@ taille de caract�res l�g�rement sup�rieure � la normale */
     margin-top : 1.2em;
     margin-left: 18%;
 }
+
+#grpButtonFraishorsforfait{
+    float:right;
+}
 /*#formFraitForfait{
     border-style:inset;
     border-width:3px;

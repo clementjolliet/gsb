@@ -22,7 +22,7 @@ switch($action){
 			include("vues/v_erreurs.php");
 		}
 	  break;
-	}
+	} 
 	case 'validerCreationFrais':{
 		$dateFrais = $_REQUEST['dateFrais'];
 		$libelle = $_REQUEST['libelle'];

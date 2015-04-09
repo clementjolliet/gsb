@@ -8,6 +8,7 @@
         echo "<style type='text/css'>";
         if ($_SESSION['fonction'] == "comptable") {
             echo "body { background-color: #E67E30 !important; }";
+            echo ".nav-pills>li.active>a { background-color: #E67E30 !important; }";
         } else {
             echo "body { background-color: #357AB7 !important; }";
         }

@@ -10,11 +10,11 @@ $lesVisiteurs = $pdo->getLesVisiteurs();
 $lesMois = $pdo->getTousLesMois();
 //include("vues/v_selectionVisiteur.php");
 switch ($action) {
-    case 'selectionnerMois': {
+    case 'selectionnerMoisVisiteur': {
             $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
-            // Afin de sélectionner par défaut le dernier mois dans la zone de liste
-            // on demande toutes les clés, et on prend la première,
-            // les mois étant triés décroissants
+            // Afin de sï¿½lectionner par dï¿½faut le dernier mois dans la zone de liste
+            // on demande toutes les clï¿½s, et on prend la premiï¿½re,
+            // les mois ï¿½tant triï¿½s dï¿½croissants
             $lesCles = array_keys($lesMois);
             $moisASelectionner = $lesCles[0];
             include("vues/v_selectionVisiteur.php");

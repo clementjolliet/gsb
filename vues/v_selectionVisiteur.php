@@ -2,7 +2,7 @@
 <div class="container-fluid">
     <h2>Validation de fiche de frais</h2>
     <h3>Visiteur à sélectionner : </h3>
-    <form action="index.php?uc=comptable&action=pageFraisComptable" method="post">
+    <form action="index.php?uc=comptableValidationFiche&action=pageFraisComptable" method="post">
         <div class=" col-lg-2 col-md-2 col-xs-2 form-group">
 
             <p>

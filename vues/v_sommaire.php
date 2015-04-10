@@ -38,7 +38,7 @@
             ?>
 
             <li><a href="index.php?uc=comptableValidationFiche&action=selectionnerMoisVisiteur" title="Valider fiche de frais">Validation</a></li>
-            <li><a href="#" title="Suivie des fiches de frais">Suivies</a></li>
+            <li><a href="index.php?uc=comptableSuiviPaiementFiche&action=selectionnerFicheFrais" title="Suivie des fiches de frais">Suivies</a></li>
             <li><a href="index.php?uc=connexion&action=deconnexion" title="Se déconnecter">Déconnexion</a></li>
 
             <!--            <li class="smenu">

@@ -396,7 +396,7 @@ class PdoGsb {
     }
     
     /**
-     * Fonction récupérant tous les mois présents dans la base de donnée
+     * Fonction rï¿½cupï¿½rant tous les mois prï¿½sents dans la base de donnï¿½e
      */
     public function getTousLesMois(){
         $req = "select fichefrais.mois as mois from  fichefrais  
@@ -419,5 +419,16 @@ class PdoGsb {
         return $lesMois;
     }
     
+    
+    public function getFicheFraisAValider(){
+        $req="select fichefrais.mois as mois, fichefrais.idvisiteur as id, etat.libelle as etat from fichefrais inner join etat on etat.id=fichefrais.idetat "
+                . "where etat.libelle='CL' or etat.libelle='VA'";
+        $res=  PdoGsb::$monPdo->prepare($req);
+        $res->execute();
+        $lesMois = array();
+        $laLigne = $res->fetch();
+        
+        return $laLigne;
+    }
 }
 ?>

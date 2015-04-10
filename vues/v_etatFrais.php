@@ -87,10 +87,16 @@
             ?>
         </table>
     </div>
-    <form action="index.php?uc=comptable&action=validerFraisComptable" method="post">
+    <form action="index.php?uc=comptableValidationFiche&action=validerFraisComptable" method="post">
+        <?php 
+        if ($_SESSION['fonction'] == "comptable") {
+        ?>
         <div class="col-lg-offset-9 col-md-offset-9 col-xs-offset-9 col-lg-3 col-md-3 col-xs-3">
             <input id="ok" type="submit" class="btn btn-success" value="Valider" />
         </div>
+        <?php
+        }
+        ?>
     </form>
 </div>
 </div>

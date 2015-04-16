@@ -421,14 +421,11 @@ class PdoGsb {
     
     
     public function getFicheFraisAValider(){
-        $req="select fichefrais.mois as mois, fichefrais.idvisiteur as id, etat.libelle as etat from fichefrais inner join etat on etat.id=fichefrais.idetat "
-                . "where etat.libelle='CL' or etat.libelle='VA'";
+        $req="select nom, prenom, idvisiteur, mois from fichefrais inner join employe on fichefrais.idvisiteur=employe.id where idetat='CL' or idetat='VA'";
         $res=  PdoGsb::$monPdo->prepare($req);
         $res->execute();
-        $lesMois = array();
-        $laLigne = $res->fetch();
-        
-        return $laLigne;
+        $lesFicheFrais = $res->fetchAll(PDO::FETCH_ASSOC);   
+        return $lesFicheFrais;
     }
 }
 ?>

@@ -1,9 +1,9 @@
 <div class="container-fluid">
     <h2>Suivi des fiches de frais</h2>
     <h3>Fiche à sélectionner : </h3>
-    <form action="index.php?uc=etatFrais&action=voirFicheFrais" method="post">
+    <form action="index.php?uc=comptableSuiviPaiementFiche&action=voirFicheFrais" method="post">
         <!--      <div class="corpsForm">-->
-        <div class=" col-lg-2 col-md-2 col-xs-2 form-group">
+        <div class=" col-lg-5 col-md-5 col-xs-5 form-group">
             <?php
             include 'v_listeFicheFrais.php';
             ?>

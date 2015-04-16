@@ -87,17 +87,30 @@
             ?>
         </table>
     </div>
-    <form action="index.php?uc=comptableValidationFiche&action=validerFraisComptable" method="post">
-            <?php
-            if ($action == "affichePageFraisComptable" && $_SESSION['fonction'] == "comptable") {
-                ?>
+    <?php
+    if ($action == "affichePageFraisComptable" && $_SESSION['fonction'] == "comptable") {
+        ?>
+        <form action="index.php?uc=comptableValidationFiche&action=validerFraisComptable" method="post">
+
             <div class="col-lg-offset-9 col-md-offset-9 col-xs-offset-9 col-lg-3 col-md-3 col-xs-3">
                 <input id="ok" type="submit" class="btn btn-success" value="Valider" />
             </div>
-            <?php
-        }
+
+        </form>
+        <?php
+    }
+    else if($action == "" && $_SESSION['fonction'] == "comptable"){
         ?>
-    </form>
+        <form action="index.php?uc=comptableValidationFiche&action=#" method="post">
+
+            <div class="col-lg-offset-9 col-md-offset-9 col-xs-offset-9 col-lg-3 col-md-3 col-xs-3">
+                <input id="ok" type="submit" class="btn btn-success" value="Valider" />
+            </div>
+
+        </form>
+        <?php
+    }
+    ?>
 </div>
 </div>
 </div>

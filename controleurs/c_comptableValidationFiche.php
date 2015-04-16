@@ -13,10 +13,6 @@ include("vues/v_selectionVisiteur.php");
 
 
 switch ($action) {
-    case 'selectionnerMoisVisiteur': {
-            //include("vues/v_selectionVisiteur.php");
-            break;
-        }
     case 'affichePageFraisComptable': {
 
             $leMois = $_REQUEST['lstMois'];

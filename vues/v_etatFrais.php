@@ -22,15 +22,15 @@
                 <?php
                 foreach ($lesFraisForfait as $unFraisForfait) {
                     $quantite = $unFraisForfait['quantite'];
-                    if ($_SESSION['fonction'] == "visiteur") {
-                        ?>
-                        <td class="qteForfait"><?php echo $quantite ?> </td>
-                        <?php
-                    } else {
+                    if ($action == "affichePageFraisComptable" && $_SESSION['fonction'] == "comptable") {
                         ?>
                         <td class="qteForfait">
                             <input value="<?php echo $quantite ?>">
                         </td>
+                        <?php
+                    } else {
+                        ?>
+                        <td class="qteForfait"><?php echo $quantite ?> </td>
                         <?php
                     }
                 }
@@ -57,15 +57,7 @@
                 $libelle = $unFraisHorsForfait['libelle'];
                 $montant = $unFraisHorsForfait['montant'];
 
-                if ($_SESSION['fonction'] == "visiteur") {
-                    ?>
-                    <tr>
-                        <td><?php echo $date ?></td>
-                        <td><?php echo $libelle ?></td>
-                        <td><?php echo $montant ?></td>
-                    </tr>
-                    <?php
-                } else {
+                if ($action == "affichePageFraisComptable" && $_SESSION['fonction'] == "comptable") {
                     ?>
                     <tr>
                         <td>
@@ -82,16 +74,43 @@
                         </td>
                     </tr>
                     <?php
+                } else {
+                    ?>
+                    <tr>
+                        <td><?php echo $date ?></td>
+                        <td><?php echo $libelle ?></td>
+                        <td><?php echo $montant ?></td>
+                    </tr>
+                    <?php
                 }
             }
             ?>
         </table>
     </div>
-    <form action="index.php?uc=comptable&action=validerFraisComptable" method="post">
-        <div class="col-lg-offset-9 col-md-offset-9 col-xs-offset-9 col-lg-3 col-md-3 col-xs-3">
-            <input id="ok" type="submit" class="btn btn-success" value="Valider" />
-        </div>
-    </form>
+    <?php
+    if ($action == "affichePageFraisComptable" && $_SESSION['fonction'] == "comptable") {
+        ?>
+        <form action="index.php?uc=comptableValidationFiche&action=validerFraisComptable" method="post">
+
+            <div class="col-lg-offset-9 col-md-offset-9 col-xs-offset-9 col-lg-3 col-md-3 col-xs-3">
+                <input id="ok" type="submit" class="btn btn-success" value="Valider" />
+            </div>
+
+        </form>
+        <?php
+    }
+    else if($action == "" && $_SESSION['fonction'] == "comptable"){
+        ?>
+        <form action="index.php?uc=comptableValidationFiche&action=#" method="post">
+
+            <div class="col-lg-offset-9 col-md-offset-9 col-xs-offset-9 col-lg-3 col-md-3 col-xs-3">
+                <input id="ok" type="submit" class="btn btn-success" value="Valider" />
+            </div>
+
+        </form>
+        <?php
+    }
+    ?>
 </div>
 </div>
 </div>

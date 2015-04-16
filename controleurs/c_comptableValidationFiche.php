@@ -2,45 +2,47 @@
 
 include("vues/v_sommaire.php");
 $idVisiteur = $_SESSION['idVisiteur'];
-$mois = getMois(date("d/m/Y"));
-$numAnnee = substr($mois, 0, 4);
-$numMois = substr($mois, 4, 2);
 $action = $_REQUEST['action'];
+
 $lesVisiteurs = $pdo->getLesVisiteurs();
 $lesMois = $pdo->getTousLesMois();
-//include("vues/v_selectionVisiteur.php");
+
+$lesCles = array_keys($lesMois);
+$moisASelectionner = $lesCles[0];
+include("vues/v_selectionVisiteur.php");
+
+
 switch ($action) {
-    case 'selectionnerMoisVisiteur': {
-            $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
-            // Afin de s�lectionner par d�faut le dernier mois dans la zone de liste
-            // on demande toutes les cl�s, et on prend la premi�re,
-            // les mois �tant tri�s d�croissants
-            $lesCles = array_keys($lesMois);
-            $moisASelectionner = $lesCles[0];
-            include("vues/v_selectionVisiteur.php");
-            break;
-        }
-    case 'pageFraisComptable': {
+    case 'affichePageFraisComptable': {
+
             $leMois = $_REQUEST['lstMois'];
             $leVisiteur = $_REQUEST['lstVisiteurs'];
+
+            //permet de re selectionner le mois et le visiteur de la fiche en cours de validation
+
             $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
             $moisASelectionner = $leMois;
             $visiteurASelectionner = $leVisiteur;
-            include("vues/v_selectionVisiteur.php");
+
             $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $leMois);
             $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $leMois);
             $lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($idVisiteur, $leMois);
             $numAnnee = substr($leMois, 0, 4);
             $numMois = substr($leMois, 4, 2);
+
+            //include("vues/v_selectionVisiteur.php");
+
             $libEtat = $lesInfosFicheFrais['libEtat'];
             $montantValide = $lesInfosFicheFrais['montantValide'];
             $nbJustificatifs = $lesInfosFicheFrais['nbJustificatifs'];
             $dateModif = $lesInfosFicheFrais['dateModif'];
             $dateModif = dateAnglaisVersFrancais($dateModif);
             include("vues/v_etatFrais.php");
+            break;
         }
     case 'validerFraisComptable': {
-            
+
+            break;
         }
 }
 ?>

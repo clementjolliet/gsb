@@ -6,7 +6,7 @@
         $numAnnee = substr($mois, 0, 4);
         $numMois = substr($mois, 4, 2);
         ?>
-        <option selected value="<?php echo $uneFiche['idvisiteur'] ?>"><?php echo $numMois . "/" . $numAnnee . " - " . $uneFiche['nom'] . " " . $uneFiche['prenom'] ?> </option>
+        <option selected value="<?php echo $uneFiche['idvisiteur'].'/'.$mois ?>"><?php echo $numMois . "/" . $numAnnee . " - " . $uneFiche['nom'] . " " . $uneFiche['prenom'] ?> </option>
         <?php
     }
     ?>            

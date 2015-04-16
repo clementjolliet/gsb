@@ -104,7 +104,7 @@
         <form action="index.php?uc=comptableSuiviPaiementFiche&action=updateEtatFicheFrais" method="post">
 
             <div class="col-lg-offset-9 col-md-offset-9 col-xs-offset-9 col-lg-3 col-md-3 col-xs-3">
-                <input id="ok" type="submit" class="btn btn-success" value="Valider" />
+                <input id="ok" type="submit" class="btn btn-success" value="Mettre à jour l'etat" />
             </div>
 
         </form>

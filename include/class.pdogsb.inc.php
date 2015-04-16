@@ -395,11 +395,8 @@ class PdoGsb {
 
     /**
      * Fonction r�cup�rant tous les mois pr�sents dans la base de donn�e
-<<<<<<< HEAD
      * 
      * @return type = Array
-=======
->>>>>>> origin/work
      */
     public function getTousLesMois() {
         $req = "select fichefrais.mois as mois from  fichefrais  
@@ -423,11 +420,12 @@ class PdoGsb {
     }  
     
     public function getFicheFraisAValider(){
-        $req="select nom, prenom, idvisiteur, mois from fichefrais inner join employe on fichefrais.idvisiteur=employe.id where idetat='CL' or idetat='VA'";
+        $req="select nom, prenom, idvisiteur, mois, idetat from fichefrais inner join employe on fichefrais.idvisiteur=employe.id where idetat='CL' or idetat='VA'";
         $res=  PdoGsb::$monPdo->prepare($req);
         $res->execute();
         $lesFicheFrais = $res->fetchAll(PDO::FETCH_ASSOC);   
         return $lesFicheFrais;
     }
+    
 }
 ?>

@@ -99,9 +99,9 @@
         </form>
         <?php
     }
-    else if($action == "" && $_SESSION['fonction'] == "comptable"){
+    else if($action == "voirFicheFrais" && $_SESSION['fonction'] == "comptable"){
         ?>
-        <form action="index.php?uc=comptableValidationFiche&action=#" method="post">
+        <form action="index.php?uc=comptableSuiviPaiementFiche&action=updateEtatFicheFrais" method="post">
 
             <div class="col-lg-offset-9 col-md-offset-9 col-xs-offset-9 col-lg-3 col-md-3 col-xs-3">
                 <input id="ok" type="submit" class="btn btn-success" value="Valider" />

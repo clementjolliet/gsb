@@ -28,8 +28,8 @@ switch ($action) {
             break;
         }
     case 'updateEtatFicheFrais': {
-            $visiteurSelected = $_REQUEST['idVisiteur'];
-            $moiSelected = $_REQUEST['moiSelected'];
+            $visiteurSelected = $_REQUEST['idVisiteurFicheFrais'];
+            $moiSelected = $_REQUEST['moiSelectedFicheFrais'];
             if ($uneFiche['idetat'] == 'CL') {
                 $pdo->majEtatFicheFrais($visiteurSelected, $moiSelected, 'VA');
             } else if ($uneFiche['idetat'] == 'VA') {

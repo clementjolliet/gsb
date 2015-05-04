@@ -6,12 +6,17 @@
         $nomVisiteur = $unVisiteur->nom;
         $prenomVisiteur = $unVisiteur->prenom;
 
-        if($idVisiteur == $visiteurASelectionner) {
-            ?>
-            <option selected value="<?php echo $idVisiteur ?>"><?php echo $nomVisiteur . " " . $prenomVisiteur ?> </option>
-            <?php
-        }
-        else{
+        if (isset($visiteurASelectionner)) {
+            if ($idVisiteur == $visiteurASelectionner) {
+                ?>
+                <option selected value="<?php echo $idVisiteur ?>"><?php echo $nomVisiteur . " " . $prenomVisiteur ?> </option>
+                <?php
+            } else {
+                ?>
+                <option value="<?php echo $idVisiteur ?>"><?php echo $nomVisiteur . " " . $prenomVisiteur ?> </option>
+                <?php
+            }
+        } else {
             ?>
             <option value="<?php echo $idVisiteur ?>"><?php echo $nomVisiteur . " " . $prenomVisiteur ?> </option>
             <?php

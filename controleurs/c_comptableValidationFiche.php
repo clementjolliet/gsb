@@ -28,12 +28,13 @@ switch ($action) {
 
             $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
 
-            $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $leMois);
-            $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $leMois);
-            $lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($idVisiteur, $leMois);
+            $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($leVisiteur, $leMois);
+            $lesFraisForfait = $pdo->getLesFraisForfait($leVisiteur, $leMois);
+            $lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($leVisiteur, $leMois);
             $numAnnee = substr($leMois, 0, 4);
             $numMois = substr($leMois, 4, 2);
 
+            $StateFiche = $lesInfosFicheFrais[0];
 
             $libEtat = $lesInfosFicheFrais['libEtat'];
             $montantValide = $lesInfosFicheFrais['montantValide'];
@@ -44,7 +45,15 @@ switch ($action) {
             break;
         }
     case 'validerFraisComptable': {
-
+            $lesFrais = $_REQUEST['lesFrais'];
+            $visiteurSelected = $_REQUEST['idVisiteur'];
+            $moiSelected = $_REQUEST['moiSelected'];
+            if (lesQteFraisValides($lesFrais)) {
+                $pdo->majFraisForfait($visiteurSelected, $moiSelected, $lesFrais);
+            } else {
+                ajouterErreur("Les valeurs des frais doivent être numériques");
+                include("vues/v_erreurs.php");
+            }
             break;
         }
 }

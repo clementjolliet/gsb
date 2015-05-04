@@ -8,29 +8,33 @@ $lesVisiteurs = $pdo->getLesVisiteurs();
 $lesMois = $pdo->getTousLesMois();
 
 $lesCles = array_keys($lesMois);
-$moisASelectionner = $lesCles[0];
+
+if (isset($_REQUEST['lstMois'])) {
+    $leMois = $_REQUEST['lstMois'];
+    $moisASelectionner = $leMois;
+} else {
+    $moisASelectionner = $lesCles[0];
+}
+
+if (isset($_REQUEST['lstVisiteurs'])) {
+    $leVisiteur = $_REQUEST['lstVisiteurs'];
+    $visiteurASelectionner = $leVisiteur;
+}
 include("vues/v_selectionVisiteur.php");
 
 
 switch ($action) {
     case 'affichePageFraisComptable': {
 
-            $leMois = $_REQUEST['lstMois'];
-            $leVisiteur = $_REQUEST['lstVisiteurs'];
-
-            //permet de re selectionner le mois et le visiteur de la fiche en cours de validation
-
             $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
-            $moisASelectionner = $leMois;
-            $visiteurASelectionner = $leVisiteur;
 
-            $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $leMois);
-            $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $leMois);
-            $lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($idVisiteur, $leMois);
+            $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($leVisiteur, $leMois);
+            $lesFraisForfait = $pdo->getLesFraisForfait($leVisiteur, $leMois);
+            $lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($leVisiteur, $leMois);
             $numAnnee = substr($leMois, 0, 4);
             $numMois = substr($leMois, 4, 2);
 
-            //include("vues/v_selectionVisiteur.php");
+            $StateFiche = $lesInfosFicheFrais[0];
 
             $libEtat = $lesInfosFicheFrais['libEtat'];
             $montantValide = $lesInfosFicheFrais['montantValide'];
@@ -41,7 +45,15 @@ switch ($action) {
             break;
         }
     case 'validerFraisComptable': {
-
+            $lesFrais = $_REQUEST['lesFrais'];
+            $visiteurSelected = $_REQUEST['idVisiteur'];
+            $moiSelected = $_REQUEST['moiSelected'];
+            if (lesQteFraisValides($lesFrais)) {
+                $pdo->majFraisForfait($visiteurSelected, $moiSelected, $lesFrais);
+            } else {
+                ajouterErreur("Les valeurs des frais doivent être numériques");
+                include("vues/v_erreurs.php");
+            }
             break;
         }
 }

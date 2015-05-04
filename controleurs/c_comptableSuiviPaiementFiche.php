@@ -5,23 +5,13 @@ $idVisiteur = $_SESSION['idVisiteur'];
 $action = $_REQUEST['action'];
 $lesFichesFrais = $pdo->getFicheFraisAValider();
 include("vues/v_selectionFicheFrais.php");
-$fichefrais = explode('/', $_REQUEST['lstFichefrais']);
-$id = $fichefrais[0];
-$leMois = $fichefrais[1]; 
-//$visiteurASelectionner = $id;
+
 switch ($action) {
-//    case 'selectionnerFicheFrais': {
-//            $lesFichesFrais = $pdo->getFicheFraisAValider();
-//            include("vues/v_selectionFicheFrais.php");
-//            break;
-//        }
     case 'voirFicheFrais': {
-//            $lesFichesFrais = $pdo->getFicheFraisAValider();
-//            include("vues/v_selectionFicheFrais.php");
-//            $fichefrais = explode('/', $_REQUEST['lstFichefrais']);
-//            $id = $fichefrais[0];
-//            $leMois = $fichefrais[1];
-           
+            $valueListe = $_REQUEST['1stFicheFrais'];
+            $fichefrais = explode('/', $valueListe);
+            $id = $fichefrais[0];
+            $leMois = $fichefrais[1];
             $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($id, $leMois);
             $lesFraisForfait = $pdo->getLesFraisForfait($id, $leMois);
             $lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($id, $leMois);

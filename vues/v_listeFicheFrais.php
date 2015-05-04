@@ -8,7 +8,7 @@
         $mois = $uneFiche['mois'];
         $numAnnee = substr($mois, 0, 4);
         $numMois = substr($mois, 4, 2);
-        if ($idvisiteur == $id) {
+        if ($idvisiteur == $idASelectionner) {
             ?>
             <option selected value="<?php echo $idvisiteur . '/' . $mois ?>"><?php echo $numMois . "/" . $numAnnee . " - " . $nom . " " . $prenom ?> </option>
             <?php

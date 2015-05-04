@@ -420,7 +420,7 @@ class PdoGsb {
     }  
     
     public function getFicheFraisAValider(){
-        $req="select nom, prenom, idvisiteur, mois, idetat from fichefrais inner join employe on fichefrais.idvisiteur=employe.id where idetat='CL' or idetat='VA'";
+        $req="select nom, prenom, idvisiteur, mois, idetat from fichefrais inner join employe on fichefrais.idvisiteur=employe.id where idetat='CL' or idetat='VA' and employe.fonction='visiteur'";
         $res=  PdoGsb::$monPdo->prepare($req);
         $res->execute();
         $lesFicheFrais = $res->fetchAll(PDO::FETCH_ASSOC);   

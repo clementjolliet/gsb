@@ -48,12 +48,25 @@ switch ($action) {
             $lesFrais = $_REQUEST['lesFrais'];
             $visiteurSelected = $_REQUEST['idVisiteur'];
             $moiSelected = $_REQUEST['moiSelected'];
+
+            $lesFichesFraisHorsForfait = $_REQUEST['lesFicheHorsForfait'];
+
             if (lesQteFraisValides($lesFrais)) {
                 $pdo->majFraisForfait($visiteurSelected, $moiSelected, $lesFrais);
             } else {
                 ajouterErreur("Les valeurs des frais doivent être numériques");
                 include("vues/v_erreurs.php");
             }
+            for ($i = 0;$i<count($lesFichesFraisHorsForfait);$i++ ){
+                $idLigne = $lesFichesFraisHorsForfait[$i]['id'];
+                $dateLigne = $lesFichesFraisHorsForfait[$i]['date'];
+                $libelleLigne = $lesFichesFraisHorsForfait[$i]['libelle'];
+                $montantLigne = $lesFichesFraisHorsForfait[$i]['montant'];
+                $pdo->majFraisHorsForfait($idLigne,$dateLigne,$libelleLigne,$montantLigne);
+            }
+            
+            
+            
             break;
         }
 }

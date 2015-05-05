@@ -44,7 +44,7 @@ if ($action == "affichePageFraisComptable" && $_SESSION['fonction'] == "comptabl
                             foreach ($lesFraisForfait as $unFraisForfait) {
                                 $idFrais = $unFraisForfait['idfrais'];
                                 $quantite = $unFraisForfait['quantite'];
-                                if ($action == "affichePageFraisComptable" && $_SESSION['fonction'] == "comptable") {
+                                if ($action == "affichePageFraisComptable" && $_SESSION['fonction'] == "comptable" && ($StateFiche == "CR" || $StateFiche == "CL")) {
                                     ?>
                                     <td class="qteForfait">
                                         <input id="idFrais" name="lesFrais[<?php echo $idFrais ?>]" value="<?php echo $quantite ?>">
@@ -74,7 +74,9 @@ if ($action == "affichePageFraisComptable" && $_SESSION['fonction'] == "comptabl
                             </tr>
                         </thead>
                         <?php
+                        $i = 0;
                         foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
+                            $id = $unFraisHorsForfait['id'];
                             $date = $unFraisHorsForfait['date'];
                             $libelle = $unFraisHorsForfait['libelle'];
                             $montant = $unFraisHorsForfait['montant'];
@@ -82,20 +84,24 @@ if ($action == "affichePageFraisComptable" && $_SESSION['fonction'] == "comptabl
                             if ($action == "affichePageFraisComptable" && $_SESSION['fonction'] == "comptable") {
                                 ?>
                                 <tr>
-                                    <td>
-                                        <input value="<?php echo $date ?>">
-                                    </td>
-                                    <td>
-                                        <input value="<?php echo $libelle ?>">
-                                    </td>
-                                    <td>
-                                        <input value="<?php echo $montant ?>">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox" checked="true">
-                                    </td>
+                                <input name="lesFicheHorsForfait[<?php echo $i ?>][id]" style="display: none" value="<?php echo $id ?>">
+
+                                <td>
+                                    <!--<input name="lesFicheHorsForfait[<?php //echo $i ?>][date]" value="<?php //echo $date ?>">-->
+                                    <?php echo $date?>
+                                </td>
+                                <td>
+                                    <input name="lesFicheHorsForfait[<?php echo $i ?>][libelle]" value="<?php echo $libelle ?>">
+                                </td>
+                                <td>
+                                    <input name="lesFicheHorsForfait[<?php echo $i ?>][montant]" value="<?php echo $montant ?>">
+                                </td>
+                                <td>
+                                    <input type="checkbox" checked="true">
+                                </td>
                                 </tr>
                                 <?php
+                                $i++;
                             } else {
                                 ?>
                                 <tr>
@@ -111,14 +117,14 @@ if ($action == "affichePageFraisComptable" && $_SESSION['fonction'] == "comptabl
                 </div>
 
             </div>
-            <?php if($action == "voirFicheFrais" && $_SESSION['fonction'] == "comptable"){ ?>
+            <?php if ($action == "voirFicheFrais" && $_SESSION['fonction'] == "comptable") { ?>
                 <div class="col-lg-offset-9 col-md-offset-9 col-xs-offset-9 col-lg-3 col-md-3 col-xs-3">
-                <input id="ok" type="submit" class="btn btn-success" value="Mettre à jour l'etat" />
-            <?php }else{ ?>
-            <div class="col-lg-offset-9 col-md-offset-9 col-xs-offset-9 col-lg-3 col-md-3 col-xs-3">
-                <input id="ok" type="submit" class="btn btn-success" value="Valider" />
-            </div>
-            <?php } ?>
+                    <input id="ok" type="submit" class="btn btn-success" value="Mettre à jour l'etat" />
+                <?php } else { ?>
+                    <div class="col-lg-offset-9 col-md-offset-9 col-xs-offset-9 col-lg-3 col-md-3 col-xs-3">
+                        <input id="ok" type="submit" class="btn btn-success" value="Valider" />
+                    </div>
+                <?php } ?>
         </form>
         </div>
         </div>

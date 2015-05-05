@@ -33,19 +33,29 @@ switch ($action) {
             break;
         }
     case 'updateEtatFicheFrais': {
-        try{
-            $visiteurSelectedFF = $_REQUEST['idVisiteurFicheFrais'];
-            $moiSelectedFF = $_REQUEST['moiSelectedFicheFrais'];
-            $etatFF = $_REQUEST['etatFicheFrais'];
-            if ($etatFF == 'CL') {
-                $pdo->majEtatFicheFrais($visiteurSelectedFF, $moiSelectedFF, 'VA');
-            } else if ($etatFF == 'VA') {
-                $pdo->majEtatFicheFrais($visiteurSelectedFF, $moiSelectedFF, 'RB');
+            try {
+                $visiteurSelectedFF = $_REQUEST['idVisiteurFicheFrais'];
+                $moiSelectedFF = $_REQUEST['moiSelectedFicheFrais'];
+                $etatFF = $_REQUEST['etatFicheFrais'];
+                if ($etatFF == 'CL') {
+                    $pdo->majEtatFicheFrais($visiteurSelectedFF, $moiSelectedFF, 'VA');
+                    echo '<div class="col-lg-12"><div id="alert" class="alert alert-success alert-dismissible" role="alert">'
+                    . '<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                       </button>'
+                    . '<strong>Succés !</strong> La fiche de frais a bien été payé.</div></div>';
+                } else if ($etatFF == 'VA') {
+                    $pdo->majEtatFicheFrais($visiteurSelectedFF, $moiSelectedFF, 'RB');
+                    echo '<div class="col-lg-12"> <div id="alert" class="alert alert-success alert-dismissible fade in" role="alert">'
+                    . '<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>'
+                    . '<strong>Succés !</strong> La fiche de frais a bien été remboursé.</div></div>';
+                }
+            } catch (Exception $ex) {
+                ajouterErreur('Erreur de mise à jour des FicheFrais dans la base de données');
+                include('vues/v_erreurs.php');
             }
-        }catch(Exception $ex){
-            ajouterErreur('Erreur de mise à jour des FicheFrais dans la base de données');
-            include('vues/v_erreurs.php');
-        }
             break;
         }
 }

@@ -48,7 +48,7 @@ switch ($action) {
 //                    . '<strong>Succés !</strong> La fiche de frais a bien été payé.</div></div>';
 //                } else if ($etatFF == 'VA') {
                     $pdo->majEtatFicheFrais($visiteurSelectedFF, $moiSelectedFF, 'RB');
-                    echo '<div class="col-lg-12"> <div id="alert" class="alert alert-success alert-dismissible fade in" role="alert">'
+                    echo '<div class="col-lg-10 col-md-10 col-xs-10"><div id="alert" class="alert alert-success alert-dismissible fade in" role="alert">'
                     . '<button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>'

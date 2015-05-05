@@ -23,6 +23,7 @@ if ($action == "affichePageFraisComptable" && $_SESSION['fonction'] == "comptabl
                 ?>
                     <input name="idVisiteurFicheFrais" style="display: none" value="<?php echo $idASelectionner; ?>"/>
                     <input name="moiSelectedFicheFrais" style="display: none" value="<?php echo $leMois; ?>"/>
+                    <input name="etatFicheFrais" style="display: none" value="<?php echo $libEtat; ?>"/>
                 <?php } ?>
             </div>
             <div class="col-lg-12">

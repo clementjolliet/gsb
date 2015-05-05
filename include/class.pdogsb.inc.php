@@ -286,11 +286,10 @@ class PdoGsb {
         $res->execute();
     }
     
-    public function majFraisHorsForfait($idFrais,$date,$libelle,$montant) {
-        $req = "update LigneFraisHorsForfait set date = :date, montant = :montant, libelle = :libelle 
+    public function majFraisHorsForfait($idFrais,$libelle,$montant) {
+        $req = "update LigneFraisHorsForfait set montant = :montant, libelle = :libelle 
 		where LigneFraisHorsForfait.id = :idFrais";
         $res = PdoGsb::$monPdo->prepare($req);
-        $res->bindParam(':date', $date);
         $res->bindParam(':montant', $montant);
         $res->bindParam(':libelle', $libelle);
         $res->bindParam(':idFrais', $idFrais);

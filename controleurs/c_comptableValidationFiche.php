@@ -59,10 +59,9 @@ switch ($action) {
             }
             for ($i = 0;$i<count($lesFichesFraisHorsForfait);$i++ ){
                 $idLigne = $lesFichesFraisHorsForfait[$i]['id'];
-                $dateLigne = $lesFichesFraisHorsForfait[$i]['date'];
                 $libelleLigne = $lesFichesFraisHorsForfait[$i]['libelle'];
                 $montantLigne = $lesFichesFraisHorsForfait[$i]['montant'];
-                $pdo->majFraisHorsForfait($idLigne,$dateLigne,$libelleLigne,$montantLigne);
+                $pdo->majFraisHorsForfait($idLigne,$libelleLigne,$montantLigne);
             }
             
             

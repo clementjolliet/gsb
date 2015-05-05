@@ -427,15 +427,19 @@ class PdoGsb {
         }
         return $lesMois;
     }  
-    
-    public function getFicheFraisAValider(){
+    /**
+     * Fonction qui retourne les fiches de frais en fonction de l'etat de celles-ci
+     * @param type $etat
+     * @return type = array
+     */
+    public function getFicheFraisEtat($etat){
         $req="select nom, prenom, idvisiteur, mois, idetat from fichefrais inner join employe on fichefrais.idvisiteur = employe.id "
-                . "where idetat = 'CL' or idetat= 'VA' and employe.fonction='visiteur'";
+                . "where idetat= :etat and employe.fonction='visiteur'";
         $res=  PdoGsb::$monPdo->prepare($req);
+        $res->bindParam(':etat', $etat);
         $res->execute();
         $lesFicheFrais = $res->fetchAll(PDO::FETCH_ASSOC);   
         return $lesFicheFrais;
     }
-    
 }
 ?>

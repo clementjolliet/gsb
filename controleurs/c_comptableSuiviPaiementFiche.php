@@ -3,7 +3,7 @@
 include('vues/v_sommaire.php');
 $idVisiteur = $_SESSION['idVisiteur'];
 $action = $_REQUEST['action'];
-$lesFichesFrais = $pdo->getFicheFraisAValider('VA');
+$lesFichesFrais = $pdo->getFicheFraisEtat('VA');
 if (isset($_REQUEST['1stFicheFrais'])) {
     $valueListe = $_REQUEST['1stFicheFrais'];
     $fichefrais = explode('/', $valueListe);

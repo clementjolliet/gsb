@@ -285,6 +285,16 @@ class PdoGsb {
         $res->bindParam(':montant', $montant);
         $res->execute();
     }
+    
+    public function majFraisHorsForfait($idFrais,$libelle,$montant) {
+        $req = "update LigneFraisHorsForfait set montant = :montant, libelle = :libelle 
+		where LigneFraisHorsForfait.id = :idFrais";
+        $res = PdoGsb::$monPdo->prepare($req);
+        $res->bindParam(':montant', $montant);
+        $res->bindParam(':libelle', $libelle);
+        $res->bindParam(':idFrais', $idFrais);
+        $res->execute();
+    }
 
     /**
      * Supprime le frais hors forfait dont l'id est passé en argument

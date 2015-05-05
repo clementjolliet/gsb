@@ -1,24 +1,14 @@
 <?php
 
-include("vues/v_sommaire.php");
+include('vues/v_sommaire.php');
 $idVisiteur = $_SESSION['idVisiteur'];
 $action = $_REQUEST['action'];
-
-$lesVisiteurs = $pdo->getLesVisiteurs();
-$lesMois = $pdo->getTousLesMois();
-
-$lesCles = array_keys($lesMois);
-
-if (isset($_REQUEST['lstMois'])) {
-    $leMois = $_REQUEST['lstMois'];
-    $moisASelectionner = $leMois;
-} else {
-    $moisASelectionner = $lesCles[0];
-}
-
-if (isset($_REQUEST['lstVisiteurs'])) {
-    $leVisiteur = $_REQUEST['lstVisiteurs'];
-    $visiteurASelectionner = $leVisiteur;
+$lesFichesFrais = $pdo->getFicheFraisEtat('CL');
+if (isset($_REQUEST['1stFicheFrais'])) {
+    $valueListe = $_REQUEST['1stFicheFrais'];
+    $fichefrais = explode('/', $valueListe);
+    $idASelectionner = $fichefrais[0];
+    $leMois = $fichefrais[1];
 }
 include("vues/v_selectionVisiteur.php");
 
@@ -48,12 +38,24 @@ switch ($action) {
             $lesFrais = $_REQUEST['lesFrais'];
             $visiteurSelected = $_REQUEST['idVisiteur'];
             $moiSelected = $_REQUEST['moiSelected'];
+
+            $lesFichesFraisHorsForfait = $_REQUEST['lesFicheHorsForfait'];
+
             if (lesQteFraisValides($lesFrais)) {
                 $pdo->majFraisForfait($visiteurSelected, $moiSelected, $lesFrais);
             } else {
                 ajouterErreur("Les valeurs des frais doivent être numériques");
                 include("vues/v_erreurs.php");
             }
+            for ($i = 0;$i<count($lesFichesFraisHorsForfait);$i++ ){
+                $idLigne = $lesFichesFraisHorsForfait[$i]['id'];
+                $libelleLigne = $lesFichesFraisHorsForfait[$i]['libelle'];
+                $montantLigne = $lesFichesFraisHorsForfait[$i]['montant'];
+                $pdo->majFraisHorsForfait($idLigne,$libelleLigne,$montantLigne);
+            }
+            
+            
+            
             break;
         }
 }

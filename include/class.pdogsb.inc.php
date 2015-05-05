@@ -363,14 +363,13 @@ class PdoGsb {
      * @param $idVisiteur 
      * @param $mois sous la forme aaaamm
      */
-    public function majEtatFicheFrais($idVisiteur, $mois, $etat) {
-        $req = "update ficheFrais set idEtat = :etat, dateModif = now() 
-		where fichefrais.idvisiteur =:idVisiteur and fichefrais.mois = :mois";
+    public function majEtatFicheFrais($idVisiteurFicheFrais, $moisFicheFrais, $etatFicheFrais) {
+        $req = "update fichefrais set fichefrais.idEtat = :etat, fichefrais.dateModif = now() where fichefrais.idVisiteur = :idVisiteur and fichefrais.mois = :mois";	
         $res = PdoGsb::$monPdo->prepare($req);
-        $res->bindParam(':etat', $etat);
-        $res->bindParam(':idVisiteur', $$idVisiteur);
-        $res->bindParam(':mois', $mois);
-        $res->execute();
+//        $res->bindParam(':idVisiteur', $idVisiteurFicheFrais, PDO::PARAM_STR);
+//        $res->bindParam(':mois', $moisFicheFrais, PDO::PARAM_STR);
+//        $res->bindParam(':etat', $etatFicheFrais, PDO::PARAM_STR);
+        $res->execute(array('idVisiteur'=> $idVisiteurFicheFrais, 'mois'=> $moisFicheFrais, 'etat'=>$etatFicheFrais));
     }
 
     /**
@@ -431,7 +430,8 @@ class PdoGsb {
     }  
     
     public function getFicheFraisAValider(){
-        $req="select nom, prenom, idvisiteur, mois, idetat from fichefrais inner join employe on fichefrais.idvisiteur=employe.id where idetat='CL' or idetat='VA'";
+        $req="select nom, prenom, idvisiteur, mois, idetat from fichefrais inner join employe on fichefrais.idvisiteur = employe.id "
+                . "where idetat = 'CL' or idetat= 'VA' and employe.fonction='visiteur'";
         $res=  PdoGsb::$monPdo->prepare($req);
         $res->execute();
         $lesFicheFrais = $res->fetchAll(PDO::FETCH_ASSOC);   

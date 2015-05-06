@@ -29,6 +29,7 @@ switch ($action) {
                 connecter($id, $nom, $prenom, $fonction);
                 include("vues/v_sommaire.php");
             }
+            //$pdo->verifEtatFicheDeFrais();
             break;
         }
     default : {

@@ -13,18 +13,9 @@ if ($action == "affichePageFraisComptable" && $_SESSION['fonction'] == "comptabl
             <div class="col-lg-12">
                 <h3>Fiche de frais du mois <?php echo $numMois . "-" . $numAnnee ?> : 
                 </h3>
-                <?php
-                if ($action == "affichePageFraisComptable" && $_SESSION['fonction'] == "comptable") {
-                    ?>
-                    <input name="idVisiteur" style="display: none" value="<?php echo $visiteurASelectionner; ?>"/>
-                    <input name="moiSelected" style="display: none" value="<?php echo $moisASelectionner; ?>"/>
-                    <?php
-                }else if($action == "voirFicheFrais" && $_SESSION['fonction'] == "comptable"){
-                ?>
                     <input name="idVisiteurFicheFrais" style="display: none" value="<?php echo $idASelectionner; ?>"/>
                     <input name="moiSelectedFicheFrais" style="display: none" value="<?php echo $leMois; ?>"/>
                     <input name="etatFicheFrais" style="display: none" value="<?php echo $libEtat; ?>"/>
-                <?php } ?>
             </div>
             <div class="col-lg-12">
                 <p>
@@ -85,13 +76,12 @@ if ($action == "affichePageFraisComptable" && $_SESSION['fonction'] == "comptabl
                             $libelle = $unFraisHorsForfait['libelle'];
                             $montant = $unFraisHorsForfait['montant'];
 
-                            if ($action == "affichePageFraisComptable" && $_SESSION['fonction'] == "comptable") {
+                            if ($action == "affichePageFraisComptable" && $_SESSION['fonction'] == "comptable" && ($StateFiche == "CR" || $StateFiche == "CL")) {
                                 ?>
                                 <tr>
                                 <input name="lesFicheHorsForfait[<?php echo $i ?>][id]" style="display: none" value="<?php echo $id ?>">
 
                                 <td>
-                                    <!--<input name="lesFicheHorsForfait[<?php //echo $i ?>][date]" value="<?php //echo $date ?>">-->
                                     <?php echo $date?>
                                 </td>
                                 <td>
@@ -101,7 +91,7 @@ if ($action == "affichePageFraisComptable" && $_SESSION['fonction'] == "comptabl
                                     <input name="lesFicheHorsForfait[<?php echo $i ?>][montant]" value="<?php echo $montant ?>">
                                 </td>
                                 <td>
-                                    <input type="checkbox" checked="true">
+                                    <input name="lesFicheHorsForfait[<?php echo $i ?>][valide]" type="checkbox" checked="true">
                                 </td>
                                 </tr>
                                 <?php

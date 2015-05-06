@@ -10,34 +10,37 @@ if (isset($_REQUEST['1stFicheFrais'])) {
     $idASelectionner = $fichefrais[0];
     $leMois = $fichefrais[1];
 }
-include("vues/v_selectionVisiteur.php");
+include("vues/v_selectionFicheFrais.php");
 
 
 switch ($action) {
     case 'affichePageFraisComptable': {
 
-            $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
+            try {
+                $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idASelectionner, $leMois);
+                $lesFraisForfait = $pdo->getLesFraisForfait($idASelectionner, $leMois);
+                $lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($idASelectionner, $leMois);
+                $numAnnee = substr($leMois, 0, 4);
+                $numMois = substr($leMois, 4, 2);
 
-            $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($leVisiteur, $leMois);
-            $lesFraisForfait = $pdo->getLesFraisForfait($leVisiteur, $leMois);
-            $lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($leVisiteur, $leMois);
-            $numAnnee = substr($leMois, 0, 4);
-            $numMois = substr($leMois, 4, 2);
+                $StateFiche = $lesInfosFicheFrais[0];
 
-            $StateFiche = $lesInfosFicheFrais[0];
-
-            $libEtat = $lesInfosFicheFrais['libEtat'];
-            $montantValide = $lesInfosFicheFrais['montantValide'];
-            $nbJustificatifs = $lesInfosFicheFrais['nbJustificatifs'];
-            $dateModif = $lesInfosFicheFrais['dateModif'];
-            $dateModif = dateAnglaisVersFrancais($dateModif);
-            include("vues/v_etatFrais.php");
+                $libEtat = $lesInfosFicheFrais['idEtat'];
+                $montantValide = $lesInfosFicheFrais['montantValide'];
+                $nbJustificatifs = $lesInfosFicheFrais['nbJustificatifs'];
+                $dateModif = $lesInfosFicheFrais['dateModif'];
+                $dateModif = dateAnglaisVersFrancais($dateModif);
+                include("vues/v_etatFrais.php");
+            } catch (Exception $ex) {
+                ajouterErreur('Erreur pour l\'affichage des Frais');
+                include('vues/v_erreurs.php');
+            }
             break;
         }
     case 'validerFraisComptable': {
             $lesFrais = $_REQUEST['lesFrais'];
-            $visiteurSelected = $_REQUEST['idVisiteur'];
-            $moiSelected = $_REQUEST['moiSelected'];
+            $visiteurSelected = $_REQUEST['idVisiteurFicheFrais'];
+            $moiSelected = $_REQUEST['moiSelectedFicheFrais'];
 
             $lesFichesFraisHorsForfait = $_REQUEST['lesFicheHorsForfait'];
 
@@ -47,15 +50,23 @@ switch ($action) {
                 ajouterErreur("Les valeurs des frais doivent être numériques");
                 include("vues/v_erreurs.php");
             }
-            for ($i = 0;$i<count($lesFichesFraisHorsForfait);$i++ ){
+            for ($i = 0; $i < count($lesFichesFraisHorsForfait); $i++) {
                 $idLigne = $lesFichesFraisHorsForfait[$i]['id'];
                 $libelleLigne = $lesFichesFraisHorsForfait[$i]['libelle'];
                 $montantLigne = $lesFichesFraisHorsForfait[$i]['montant'];
-                $pdo->majFraisHorsForfait($idLigne,$libelleLigne,$montantLigne);
+                if (isset($lesFichesFraisHorsForfait[$i]['valide'])) {
+
+                    $valide = $lesFichesFraisHorsForfait[$i]['valide'];
+                    if ($valide == 'on') {
+                        $pdo->majFraisHorsForfait($idLigne, $libelleLigne, $montantLigne);
+                    }
+                } else {
+                    $pdo->supprimerFraisHorsForfait($idLigne);
+                }
             }
             
-            
-            
+            $pdo->majEtatFicheFrais($visiteurSelected, $moiSelected, 'VA');
+
             break;
         }
 }

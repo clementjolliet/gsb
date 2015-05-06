@@ -70,6 +70,16 @@ class PdoGsb {
         return $ligne;
     }
 
+//    /**
+//     * fonction qui verifie l'etat des fiches de frais et met a jour l'etat a cloturé les fiches des mois antérieurs
+//     */
+//    public function verifEtatFicheDeFrais() {
+//        $req = "update fichefrais set idetat = 'CL' where idetat = 'CR' and ";
+//
+//        $rs = PdoGsb::$monPdo->prepare($req);
+//        $rs->execute();
+//    }
+
     /**
      * Retourne sous forme d'un tableau associatif toutes les lignes de frais hors forfait
      * concernées par les deux arguments
@@ -285,8 +295,8 @@ class PdoGsb {
         $res->bindParam(':montant', $montant);
         $res->execute();
     }
-    
-    public function majFraisHorsForfait($idFrais,$libelle,$montant) {
+
+    public function majFraisHorsForfait($idFrais, $libelle, $montant) {
         $req = "update LigneFraisHorsForfait set montant = :montant, libelle = :libelle 
 		where LigneFraisHorsForfait.id = :idFrais";
         $res = PdoGsb::$monPdo->prepare($req);
@@ -363,12 +373,12 @@ class PdoGsb {
      * @param $mois sous la forme aaaamm
      */
     public function majEtatFicheFrais($idVisiteurFicheFrais, $moisFicheFrais, $etatFicheFrais) {
-        $req = "update fichefrais set fichefrais.idEtat = :etat, fichefrais.dateModif = now() where fichefrais.idVisiteur = :idVisiteur and fichefrais.mois = :mois";	
+        $req = "update fichefrais set fichefrais.idEtat = :etat, fichefrais.dateModif = now() where fichefrais.idVisiteur = :idVisiteur and fichefrais.mois = :mois";
         $res = PdoGsb::$monPdo->prepare($req);
 //        $res->bindParam(':idVisiteur', $idVisiteurFicheFrais, PDO::PARAM_STR);
 //        $res->bindParam(':mois', $moisFicheFrais, PDO::PARAM_STR);
 //        $res->bindParam(':etat', $etatFicheFrais, PDO::PARAM_STR);
-        $res->execute(array('idVisiteur'=> $idVisiteurFicheFrais, 'mois'=> $moisFicheFrais, 'etat'=>$etatFicheFrais));
+        $res->execute(array('idVisiteur' => $idVisiteurFicheFrais, 'mois' => $moisFicheFrais, 'etat' => $etatFicheFrais));
     }
 
     /**
@@ -426,20 +436,22 @@ class PdoGsb {
             $laLigne = $res->fetch();
         }
         return $lesMois;
-    }  
+    }
+
     /**
      * Fonction qui retourne les fiches de frais en fonction de l'etat de celles-ci
      * @param type $etat
      * @return type = array
      */
-    public function getFicheFraisEtat($etat){
-        $req="select nom, prenom, idvisiteur, mois, idetat from fichefrais inner join employe on fichefrais.idvisiteur = employe.id "
+    public function getFicheFraisEtat($etat) {
+        $req = "select nom, prenom, idvisiteur, mois, idetat from fichefrais inner join employe on fichefrais.idvisiteur = employe.id "
                 . "where idetat= :etat and employe.fonction='visiteur'";
-        $res=  PdoGsb::$monPdo->prepare($req);
+        $res = PdoGsb::$monPdo->prepare($req);
         $res->bindParam(':etat', $etat);
         $res->execute();
-        $lesFicheFrais = $res->fetchAll(PDO::FETCH_ASSOC);   
+        $lesFicheFrais = $res->fetchAll(PDO::FETCH_ASSOC);
         return $lesFicheFrais;
     }
+
 }
 ?>

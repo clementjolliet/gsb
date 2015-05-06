@@ -261,6 +261,7 @@ class PdoGsb {
         $res->bindParam(':mois', $mois);
         $res->execute();
         $lesIdFrais = $this->getLesIdFrais();
+        $res->closeCursor();
         foreach ($lesIdFrais as $uneLigneIdFrais) {
             $unIdFrais = $uneLigneIdFrais['idfrais'];
             $req = "insert into lignefraisforfait(idvisiteur,mois,idFraisForfait,quantite) 
@@ -270,7 +271,9 @@ class PdoGsb {
             $res->bindParam(':mois', $mois);
             $res->bindParam(':unIdFrais', $unIdFrais);
             $res->execute();
+            $res->closeCursor();
         }
+        
     }
 
     /**

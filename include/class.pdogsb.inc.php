@@ -93,7 +93,7 @@ class PdoGsb {
      */
     public function getLesFraisHorsForfait($idVisiteur, $mois) {
         $req = "select * from lignefraishorsforfait where lignefraishorsforfait.idvisiteur =:idVisiteur 
-		and lignefraishorsforfait.mois = :mois ";
+		and lignefraishorsforfait.mois = :mois and lignefraishorsforfait.libelle not like 'REFUSE %'";
         $res = PdoGsb::$monPdo->prepare($req);
         $res->bindParam(':idVisiteur', $idVisiteur);
         $res->bindParam(':mois', $mois);
@@ -316,6 +316,18 @@ class PdoGsb {
      */
     public function supprimerFraisHorsForfait($idFrais) {
         $req = "delete from lignefraishorsforfait where lignefraishorsforfait.id =:idFrais ";
+        $res = PdoGsb::$monPdo->prepare($req);
+        $res->bindParam(':idFrais', $idFrais);
+        $res->execute();
+    }
+    
+    /**
+     * Fonction permettant d'archiver un frais hors forfait refusé afin d'en garder une trace
+     * 
+     * @param type $idFrais
+     */
+    public function archiverFraisHorsForfait($idFrais) {
+        $req = "update lignefraishorsforfait set libelle = CONCAT('REFUSE ',libelle) where lignefraishorsforfait.id = :idFrais ";
         $res = PdoGsb::$monPdo->prepare($req);
         $res->bindParam(':idFrais', $idFrais);
         $res->execute();

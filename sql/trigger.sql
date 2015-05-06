@@ -1,6 +1,13 @@
+DELIMITER //
+
 CREATE TRIGGER ficheFraisEtat_trigger
-BEFORE INSERT ON fichefrais
+AFTER INSERT
+   ON fichefrais FOR EACH ROW
+   
 BEGIN
-    update fichefrais set idetat = 'CL' where idetat = 'CR';
-    
-END//
+
+   update fichefrais set idetat = 'CL' where idetat = 'CR' AND idvisiteur = new.idvisiteur AND mois != new.mois;
+   
+END; //
+
+DELIMITER ;

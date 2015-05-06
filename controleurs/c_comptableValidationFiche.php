@@ -47,10 +47,10 @@ switch ($action) {
             if (lesQteFraisValides($lesFrais)) {
                 $pdo->majFraisForfait($visiteurSelected, $moiSelected, $lesFrais);
                 echo '<div class="col-lg-10 col-md-10 col-xs-10"><div id="alert" class="alert alert-success alert-dismissible fade in" role="alert">'
-                    . '<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                . '<button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>'
-                    . '<strong>Succés !</strong> Le frais forfait a bien été mis à jour.</div></div>';
+                . '<strong>Succés !</strong> La fiche de frais a bien été mis à jour.</div></div>';
             } else {
                 ajouterErreur("Les valeurs des frais doivent être numériques");
                 include("vues/v_erreurs.php");
@@ -69,7 +69,7 @@ switch ($action) {
                     $pdo->supprimerFraisHorsForfait($idLigne);
                 }
             }
-            
+
             $pdo->majEtatFicheFrais($visiteurSelected, $moiSelected, 'VA');
 
             break;

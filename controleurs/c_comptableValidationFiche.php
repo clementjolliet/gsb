@@ -66,7 +66,7 @@ switch ($action) {
                         $pdo->majFraisHorsForfait($idLigne, $libelleLigne, $montantLigne);
                     }
                 } else {
-                    $pdo->supprimerFraisHorsForfait($idLigne);
+                    $pdo->archiverFraisHorsForfait($idLigne);
                 }
             }
 

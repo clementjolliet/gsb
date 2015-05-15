@@ -168,7 +168,7 @@ taille de caract�res l�g�rement sup�rieure � la normale */
 
 
 @-moz-document url-prefix() {
-  fieldset { display: table-cell; }
+    fieldset { display: table-cell; }
 }
 .table th{
     background-color: lightgray;
@@ -205,9 +205,13 @@ taille de caract�res l�g�rement sup�rieure � la normale */
     padding-right:0px;
 }
 .container-fluid{
-    
+
     margin-top : 1.2em;
     margin-left: 18%;
+}
+
+#grpButtonFraishorsforfait{
+    float:right;
 }
 /*#formFraitForfait{
     border-style:inset;
@@ -218,9 +222,6 @@ taille de caract�res l�g�rement sup�rieure � la normale */
     border-right-color: #149bdf;
 }*/
 @media screen and (max-width:1600px){
-    #logoGSB{
-        display:none;
-    }
     h1{
         text-align:center;
         margin-left:5px;
@@ -257,8 +258,8 @@ taille de caract�res l�g�rement sup�rieure � la normale */
         padding-right: 1px;
     }
     .nav>li>a{
-       padding:4px 2px;
-       
+        padding:4px 2px;
+
     }
     h1{
         font-size:30px;
@@ -266,10 +267,13 @@ taille de caract�res l�g�rement sup�rieure � la normale */
 }
 @media screen and (max-width:1050px){
     #page {
-    background-color:white;
-    width : 100%;
-    margin : auto ;
-    border : 0.2em solid black;
-    padding : 0.1em;
-}
+        background-color:white;
+        width : 100%;
+        margin : auto ;
+        border : 0.2em solid black;
+        padding : 0.1em;
+    }
+    #logoGSB{
+        display:none;
+    }
 }

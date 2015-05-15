@@ -61,14 +61,24 @@ class PdoGsb {
     public function getInfosVisiteur($login, $mdp) {
         $req = "select employe.id as id, employe.nom as nom, employe.prenom as prenom, employe.fonction as fonction from employe 
 		where employe.login=:login and employe.mdp=:mdp";
-        
+
         $rs = PdoGsb::$monPdo->prepare($req);
-        $rs->bindParam(':login',$login);
-        $rs->bindParam(':mdp',$mdp);
+        $rs->bindParam(':login', $login);
+        $rs->bindParam(':mdp', $mdp);
         $rs->execute();
         $ligne = $rs->fetch();
         return $ligne;
     }
+
+//    /**
+//     * fonction qui verifie l'etat des fiches de frais et met a jour l'etat a cloturé les fiches des mois antérieurs
+//     */
+//    public function verifEtatFicheDeFrais() {
+//        $req = "update fichefrais set idetat = 'CL' where idetat = 'CR' and ";
+//
+//        $rs = PdoGsb::$monPdo->prepare($req);
+//        $rs->execute();
+//    }
 
     /**
      * Retourne sous forme d'un tableau associatif toutes les lignes de frais hors forfait
@@ -83,10 +93,10 @@ class PdoGsb {
      */
     public function getLesFraisHorsForfait($idVisiteur, $mois) {
         $req = "select * from lignefraishorsforfait where lignefraishorsforfait.idvisiteur =:idVisiteur 
-		and lignefraishorsforfait.mois = :mois ";
+		and lignefraishorsforfait.mois = :mois and lignefraishorsforfait.libelle not like 'REFUSE %'";
         $res = PdoGsb::$monPdo->prepare($req);
-        $res->bindParam(':idVisiteur',$idVisiteur);
-        $res->bindParam(':mois',$mois);
+        $res->bindParam(':idVisiteur', $idVisiteur);
+        $res->bindParam(':mois', $mois);
         $res->execute();
         $lesLignes = $res->fetchAll();
         $nbLignes = count($lesLignes);
@@ -107,8 +117,8 @@ class PdoGsb {
     public function getNbjustificatifs($idVisiteur, $mois) {
         $req = "select fichefrais.nbjustificatifs as nb from  fichefrais where fichefrais.idvisiteur =:idVisiteur and fichefrais.mois = :mois";
         $res = PdoGsb::$monPdo->prepare($req);
-        $res->bindParam(':idVisiteur',$idVisiteur);
-        $res->bindParam(':mois',$mois);
+        $res->bindParam(':idVisiteur', $idVisiteur);
+        $res->bindParam(':mois', $mois);
         $res->execute();
         $laLigne = $res->fetch();
         return $laLigne['nb'];
@@ -129,8 +139,8 @@ class PdoGsb {
 		where lignefraisforfait.idvisiteur =:idVisiteur and lignefraisforfait.mois=:mois 
 		order by lignefraisforfait.idfraisforfait";
         $res = PdoGsb::$monPdo->prepare($req);
-        $res->bindParam(':idVisiteur',$idVisiteur);
-        $res->bindParam(':mois',$mois);
+        $res->bindParam(':idVisiteur', $idVisiteur);
+        $res->bindParam(':mois', $mois);
         $res->execute();
         $lesLignes = $res->fetchAll();
         return $lesLignes;
@@ -167,10 +177,10 @@ class PdoGsb {
 			where lignefraisforfait.idvisiteur = :idVisiteur and lignefraisforfait.mois = :mois
 			and lignefraisforfait.idfraisforfait = :unIdFrais";
             $res = PdoGsb::$monPdo->prepare($req);
-            $res->bindParam(':idVisiteur',$idVisiteur);
-            $res->bindParam(':mois',$mois);
-            $res->bindParam(':qte',$qte);
-            $res->bindParam(':unIdFrais',$unIdFrais);
+            $res->bindParam(':idVisiteur', $idVisiteur);
+            $res->bindParam(':mois', $mois);
+            $res->bindParam(':qte', $qte);
+            $res->bindParam(':unIdFrais', $unIdFrais);
             $res->execute();
         }
     }
@@ -186,11 +196,10 @@ class PdoGsb {
         $req = "update fichefrais set nbjustificatifs = :nbJustificatifs 
 		where fichefrais.idvisiteur = :idVisiteur and fichefrais.mois = :mois";
         $res = PdoGsb::$monPdo->prepare($req);
-        $res->bindParam(':nbJustificatifs',$nbJustificatifs);
-        $res->bindParam(':idVisiteur',$idVisiteur);
-        $res->bindParam(':mois',$mois);
+        $res->bindParam(':nbJustificatifs', $nbJustificatifs);
+        $res->bindParam(':idVisiteur', $idVisiteur);
+        $res->bindParam(':mois', $mois);
         $res->execute();
-
     }
 
     /**
@@ -205,8 +214,8 @@ class PdoGsb {
         $req = "select count(*) as nblignesfrais from fichefrais 
 		where fichefrais.mois = :mois and fichefrais.idvisiteur = :idVisiteur";
         $res = PdoGsb::$monPdo->prepare($req);
-        $res->bindParam(':idVisiteur',$idVisiteur);
-        $res->bindParam(':mois',$mois);
+        $res->bindParam(':idVisiteur', $idVisiteur);
+        $res->bindParam(':mois', $mois);
         $res->execute();
         $laLigne = $res->fetch();
         if ($laLigne['nblignesfrais'] == 0) {
@@ -224,7 +233,7 @@ class PdoGsb {
     public function dernierMoisSaisi($idVisiteur) {
         $req = "select max(mois) as dernierMois from fichefrais where fichefrais.idvisiteur = :idVisiteur";
         $res = PdoGsb::$monPdo->prepare($req);
-        $res->bindParam(':idVisiteur',$idVisiteur);
+        $res->bindParam(':idVisiteur', $idVisiteur);
         $res->execute();
         $laLigne = $res->fetch();
         $dernierMois = $laLigne['dernierMois'];
@@ -248,20 +257,23 @@ class PdoGsb {
         $req = "insert into fichefrais(idvisiteur,mois,nbJustificatifs,montantValide,dateModif,idEtat) 
 		values(:idVisiteur,:mois,0,0,now(),'CR')";
         $res = PdoGsb::$monPdo->prepare($req);
-        $res->bindParam(':idVisiteur',$idVisiteur);
-        $res->bindParam(':mois',$mois);
+        $res->bindParam(':idVisiteur', $idVisiteur);
+        $res->bindParam(':mois', $mois);
         $res->execute();
         $lesIdFrais = $this->getLesIdFrais();
+        $res->closeCursor();
         foreach ($lesIdFrais as $uneLigneIdFrais) {
             $unIdFrais = $uneLigneIdFrais['idfrais'];
             $req = "insert into lignefraisforfait(idvisiteur,mois,idFraisForfait,quantite) 
 			values(:idVisiteur,:mois,:unIdFrais,0)";
             $res->prepare($req);
-            $res->bindParam(':idVisiteur',$idVisiteur);
-            $res->bindParam(':mois',$mois);
-            $res->bindParam(':unIdFrais',$unIdFrais);
+            $res->bindParam(':idVisiteur', $idVisiteur);
+            $res->bindParam(':mois', $mois);
+            $res->bindParam(':unIdFrais', $unIdFrais);
             $res->execute();
+            $res->closeCursor();
         }
+        
     }
 
     /**
@@ -279,13 +291,22 @@ class PdoGsb {
         $req = "insert into lignefraishorsforfait 
 		values('',:idVisiteur,:mois,:libelle,:dateFr,:montant)";
         $res = PdoGsb::$monPdo->prepare($req);
-        $res->bindParam(':idVisiteur',$idVisiteur);
-        $res->bindParam(':mois',$mois);
-        $res->bindParam(':libelle',$libelle);
-        $res->bindParam(':dateFr',$dateFr);
-        $res->bindParam(':montant',$montant);
+        $res->bindParam(':idVisiteur', $idVisiteur);
+        $res->bindParam(':mois', $mois);
+        $res->bindParam(':libelle', $libelle);
+        $res->bindParam(':dateFr', $dateFr);
+        $res->bindParam(':montant', $montant);
         $res->execute();
+    }
 
+    public function majFraisHorsForfait($idFrais, $libelle, $montant) {
+        $req = "update LigneFraisHorsForfait set montant = :montant, libelle = :libelle 
+		where LigneFraisHorsForfait.id = :idFrais";
+        $res = PdoGsb::$monPdo->prepare($req);
+        $res->bindParam(':montant', $montant);
+        $res->bindParam(':libelle', $libelle);
+        $res->bindParam(':idFrais', $idFrais);
+        $res->execute();
     }
 
     /**
@@ -296,7 +317,19 @@ class PdoGsb {
     public function supprimerFraisHorsForfait($idFrais) {
         $req = "delete from lignefraishorsforfait where lignefraishorsforfait.id =:idFrais ";
         $res = PdoGsb::$monPdo->prepare($req);
-        $res->bindParam(':idFrais',$idFrais);
+        $res->bindParam(':idFrais', $idFrais);
+        $res->execute();
+    }
+    
+    /**
+     * Fonction permettant d'archiver un frais hors forfait refusé afin d'en garder une trace
+     * 
+     * @param type $idFrais
+     */
+    public function archiverFraisHorsForfait($idFrais) {
+        $req = "update lignefraishorsforfait set libelle = CONCAT('REFUSE ',libelle) where lignefraishorsforfait.id = :idFrais ";
+        $res = PdoGsb::$monPdo->prepare($req);
+        $res->bindParam(':idFrais', $idFrais);
         $res->execute();
     }
 
@@ -310,7 +343,7 @@ class PdoGsb {
         $req = "select fichefrais.mois as mois from  fichefrais where fichefrais.idvisiteur =:idVisiteur 
 		order by fichefrais.mois desc ";
         $res = PdoGsb::$monPdo->prepare($req);
-        $res->bindParam(':idVisiteur',$idVisiteur);
+        $res->bindParam(':idVisiteur', $idVisiteur);
         $res->execute();
         $lesMois = array();
         $laLigne = $res->fetch();
@@ -340,8 +373,8 @@ class PdoGsb {
 			ficheFrais.montantValide as montantValide, etat.libelle as libEtat from  fichefrais inner join Etat on ficheFrais.idEtat = Etat.id 
 			where fichefrais.idvisiteur =:idVisiteur and fichefrais.mois = :mois";
         $res = PdoGsb::$monPdo->prepare($req);
-        $res->bindParam(':idVisiteur',$idVisiteur);
-        $res->bindParam(':mois',$mois);
+        $res->bindParam(':idVisiteur', $idVisiteur);
+        $res->bindParam(':mois', $mois);
         $res->execute();
         $laLigne = $res->fetch();
         return $laLigne;
@@ -354,16 +387,15 @@ class PdoGsb {
      * @param $idVisiteur 
      * @param $mois sous la forme aaaamm
      */
-    public function majEtatFicheFrais($idVisiteur, $mois, $etat) {
-        $req = "update ficheFrais set idEtat = :etat, dateModif = now() 
-		where fichefrais.idvisiteur =:idVisiteur and fichefrais.mois = :mois";
+    public function majEtatFicheFrais($idVisiteurFicheFrais, $moisFicheFrais, $etatFicheFrais) {
+        $req = "update fichefrais set fichefrais.idEtat = :etat, fichefrais.dateModif = now() where fichefrais.idVisiteur = :idVisiteur and fichefrais.mois = :mois";
         $res = PdoGsb::$monPdo->prepare($req);
-        $res->bindParam(':etat',$etat);
-        $res->bindParam(':idVisiteur',$$idVisiteur);
-        $res->bindParam(':mois',$mois);
-        $res->execute();
+//        $res->bindParam(':idVisiteur', $idVisiteurFicheFrais, PDO::PARAM_STR);
+//        $res->bindParam(':mois', $moisFicheFrais, PDO::PARAM_STR);
+//        $res->bindParam(':etat', $etatFicheFrais, PDO::PARAM_STR);
+        $res->execute(array('idVisiteur' => $idVisiteurFicheFrais, 'mois' => $moisFicheFrais, 'etat' => $etatFicheFrais));
     }
-    
+
     /**
      * Fonction récupérant tous les employés présents dans la base de donnée
      * donc la fonction est 'visiteur'
@@ -373,27 +405,68 @@ class PdoGsb {
         $sql = "select id, prenom, nom from Employe where fonction = 'visiteur'";
         $resultat = PdoGsb::$monPdo->prepare($sql);
         $resultat->execute();
-        if ($resultat->rowCount()){
+        if ($resultat->rowCount()) {
             $LesVisiteurs = $resultat->fetchAll(PDO::FETCH_OBJ);
             return $LesVisiteurs;
         } else {
             return -1;
         }
     }
-    
+
     /**
      * Fonction initialisant des frais forfait à zéro pour un visiteur n'en ayant pas
      * pour le mois spécifié en paramètre de la fonction
      * @param type $idVisiteur
      * @param type $mois
      */
-    public function genFraisForfait($idVisiteur, $mois){
+    public function genFraisForfait($idVisiteur, $mois) {
         $sql = "insert into lignefraisforfait values (:idVisiteur, :mois, 'ETP', 0), (:idVisiteur, :mois, 'KM', 0), (:idVisiteur, :mois, 'NUI', 0), (:idVisiteur, :mois, 'REP', 0)";
         $res = PdoGsb::$monPdo->prepare($sql);
-        $res->bindParam(':idVisiteur',$idVisiteur);
-        $res->bindParam(':mois',$mois);
+        $res->bindParam(':idVisiteur', $idVisiteur);
+        $res->bindParam(':mois', $mois);
         $res->execute();
     }
-    
+
+    /**
+     * Fonction r�cup�rant tous les mois pr�sents dans la base de donn�e
+     * 
+     * @return type = Array
+     */
+    public function getTousLesMois() {
+        $req = "select fichefrais.mois as mois from  fichefrais  
+		order by fichefrais.mois desc ";
+        $res = PdoGsb::$monPdo->prepare($req);
+        $res->execute();
+        $lesMois = array();
+        $laLigne = $res->fetch();
+        while ($laLigne != null) {
+            $mois = $laLigne['mois'];
+            $numAnnee = substr($mois, 0, 4);
+            $numMois = substr($mois, 4, 2);
+            $lesMois["$mois"] = array(
+                "mois" => "$mois",
+                "numAnnee" => "$numAnnee",
+                "numMois" => "$numMois"
+            );
+            $laLigne = $res->fetch();
+        }
+        return $lesMois;
+    }
+
+    /**
+     * Fonction qui retourne les fiches de frais en fonction de l'etat de celles-ci
+     * @param type $etat
+     * @return type = array
+     */
+    public function getFicheFraisEtat($etat) {
+        $req = "select nom, prenom, idvisiteur, mois, idetat from fichefrais inner join employe on fichefrais.idvisiteur = employe.id "
+                . "where idetat= :etat and employe.fonction='visiteur'";
+        $res = PdoGsb::$monPdo->prepare($req);
+        $res->bindParam(':etat', $etat);
+        $res->execute();
+        $lesFicheFrais = $res->fetchAll(PDO::FETCH_ASSOC);
+        return $lesFicheFrais;
+    }
+
 }
 ?>

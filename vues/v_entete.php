@@ -16,18 +16,22 @@
         <link rel="shortcut icon" type="image/x-icon" href="./images/favicon.ico" />
     </head>
     <body>
-        
+        <script>$(function () {
+                $(".close").click(function () {
+                    $("#alert").alert();
+                });
+            });</script>
         <div id="page">
             <div class="container">
-            <div id="entete">
-                <div class="col-lg-12 col-md-12 col-xs-12 well">
-                    <div class="col-lg-3">
-                        <img src="./images/logo.jpg" id="logoGSB" alt="Laboratoire Galaxy-Swiss Bourdin" title="Laboratoire Galaxy-Swiss Bourdin" />
-                    </div>
-                    <div class="col-lg-8 col-md-12 col-xs-12">
-                        <h1>Suivi du remboursement des frais</h1>
+                <div id="entete">
+                    <div class="col-lg-12 col-md-12 col-xs-12 well">
+                        <div class="col-lg-3">
+                            <img src="./images/logo.jpg" id="logoGSB" alt="Laboratoire Galaxy-Swiss Bourdin" title="Laboratoire Galaxy-Swiss Bourdin" />
+                        </div>
+                        <div class="col-lg-8 col-md-12 col-xs-12">
+                            <h1>Suivi du remboursement des frais</h1>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
- 
+

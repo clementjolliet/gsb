@@ -36,8 +36,8 @@
             <?php
         } else if ($_SESSION['fonction'] == "comptable") {
             ?>
-            <li><a href="index.php?uc=comptableValidationFiche&action=#" title="Valider fiche de frais">Validation</a></li>
-            <li><a href="index.php?uc=comptableSuiviPaiementFiche&action=#" title="Suivi des fiches de frais">Suivi</a></li>
+            <li><a href="index.php?uc=comptableValidationFiche&action=affichePageFraisComptable" title="Valider fiche de frais">Validation</a></li>
+            <li><a href="index.php?uc=comptableSuiviPaiementFiche&action=voirFicheFrais" title="Suivi des fiches de frais">Suivi</a></li>
             <li><a href="index.php?uc=connexion&action=deconnexion" title="Se déconnecter">Déconnexion</a></li>
 
             <!--            <li class="smenu">

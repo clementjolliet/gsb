@@ -456,7 +456,7 @@ class PdoGsb {
     /**
      * Fonction qui retourne les fiches de frais en fonction de l'etat de celles-ci
      * @param type $etat
-     * @return type = array
+     * @return array contenant les fiches de frais 
      */
     public function getFicheFraisEtat($etat) {
         $req = "select nom, prenom, idvisiteur, mois, idetat from fichefrais inner join employe on fichefrais.idvisiteur = employe.id "
